@@ -7,21 +7,15 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.qa.swag.base.TestBase;
-
 import com.qa.swag.pages.LoginPage;
-
 import com.qa.swag.parameter.DataProviderClass;
-import com.qa.swag.testdata.ExcelReader;
 
 public class LoginPageTest extends TestBase {
 
-	ExcelReader er;
-	LoginPage lp;
+	LoginPage loginPage;
 
 	public LoginPageTest() {
-
 		super();
-
 	}
 
 	@BeforeMethod
@@ -32,8 +26,8 @@ public class LoginPageTest extends TestBase {
 
 	@Test(priority = 1)
 	public void verifyTitle() {
-		lp = new LoginPage();
-		String title = lp.getTitle();
+		loginPage = new LoginPage();
+		String title = loginPage.getTitle();
 		Assert.assertEquals(title, "Swag Labs");
 		Reporter.log("Verify tile succeed", true);
 
@@ -41,10 +35,10 @@ public class LoginPageTest extends TestBase {
 
 	@Test(dataProvider = "validdata", dataProviderClass = DataProviderClass.class, priority = 2)
 	public void validLogin(String username, String password) {
-		lp = new LoginPage();
-		lp.enterData(username, password);
-		lp.clickLoginButton();
-		String heading = lp.getProductPageHeading();
+		loginPage = new LoginPage();
+		loginPage.enterData(username, password);
+		loginPage.clickLoginButton();
+		String heading = loginPage.getProductPageHeading();
 		Assert.assertEquals(heading, "PRODUCTS");
 		Reporter.log("Logged in successfully");
 
@@ -52,18 +46,18 @@ public class LoginPageTest extends TestBase {
 
 	@Test(priority = 3)
 	public void emptyLogin() {
-		lp = new LoginPage();
-		lp.clickLoginButton();
-		String error_message = lp.getFieldEmptyErrormessage();
-		Assert.assertEquals(error_message, "Epic sadface: Username is required");
+		loginPage = new LoginPage();
+		loginPage.clickLoginButton();
+		String errorMessage = loginPage.getFieldEmptyErrormessage();
+		Assert.assertEquals(errorMessage, "Epic sadface: Username is required");
 	}
 
 	@Test(dataProvider = "invaliddata", dataProviderClass = DataProviderClass.class, priority = 4)
 	public void invalidLogin(String username, String password) {
-		lp = new LoginPage();
-		lp.enterData(username, password);
-		lp.clickLoginButton();
-		String message = lp.getInvalidLoginErrormessage();
+		loginPage = new LoginPage();
+		loginPage.enterData(username, password);
+		loginPage.clickLoginButton();
+		String message = loginPage.getInvalidLoginErrormessage();
 		Assert.assertEquals(message, "Epic sadface: Username and password do not match any user in this service");
 	}
 

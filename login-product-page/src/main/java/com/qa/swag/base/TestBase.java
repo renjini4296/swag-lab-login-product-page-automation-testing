@@ -15,13 +15,14 @@ public class TestBase {
 	FileInputStream fis;
 	Properties pro;
 	public static WebDriver driver;
+
 	public TestBase() {
-		
-		
+
 		try {
-			pro=new Properties();
-			
-			fis=new FileInputStream("C:\\Users\\renji\\eclipse-workspace\\interview\\src\\main\\java\\com\\qa\\swag\\base\\config.properties");
+			pro = new Properties();
+
+			fis = new FileInputStream(
+					"C:\\Users\\renji\\eclipse-workspace\\interview\\src\\main\\java\\com\\qa\\swag\\base\\config.properties");
 			pro.load(fis);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -31,23 +32,23 @@ public class TestBase {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void initialization() {
-		
-		String browser_Name=pro.getProperty("browser");
-		String url_Name=pro.getProperty("url");
-		if(browser_Name.equalsIgnoreCase("Chrome")) {
+
+		String browserName = pro.getProperty("browser");
+		String urlName = pro.getProperty("url");
+		if (browserName.equalsIgnoreCase("Chrome")) {
+
+			System.setProperty("webdriver.chrome.driver", "C:\\Users\\chromedriver.exe");
 			
-			System.setProperty("webdriver.chrome.driver", "C:\\Users\\chromedriver.exe");;
-			driver=new ChromeDriver();
-			
-		}
-		else if (browser_Name.equals("FireFox")) {
+			driver = new ChromeDriver();
+
+		} else if (browserName.equals("FireFox")) {
 
 			System.setProperty("webdriver.gecko.driver", "C:\\Firefoxdriver.exe");
-			driver=new FirefoxDriver();
+			driver = new FirefoxDriver();
 		}
-		driver.get(url_Name);
+		driver.get(urlName);
 		driver.manage().deleteAllCookies();
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);

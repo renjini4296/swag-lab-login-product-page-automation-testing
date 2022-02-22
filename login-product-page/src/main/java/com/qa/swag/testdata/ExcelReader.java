@@ -19,7 +19,7 @@ public class ExcelReader {
 		String value = wb.getSheet("Details").getRow(1).getCell(0).getStringCellValue();
 
 		Object[][] data = new Object[rowCount][columnCount];
-        //Getting data from Excel sheet
+		// Getting data from Excel sheet
 		for (int i = 0; i < rowCount; i++) {
 			for (int j = 0; j < columnCount; j++) {
 
