@@ -16,31 +16,34 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.qa.swag.base.TestBase;
+import com.qa.swag.pages.LoginPage;
 
 public class ProductPageTest extends TestBase {
+
+	LoginPageTest loginpagetest;
+	LoginPage loginPage;
 
 	public ProductPageTest() {
 		super();
 	}
 
 	@BeforeMethod
-	public void openBrowser() {
+	public void openProductPage() {
 
 		initialization();
-
-		driver.findElement(By.name("user-name")).sendKeys("standard_user");
-		driver.findElement(By.name("password")).sendKeys("secret_sauce");
-		driver.findElement(By.name("login-button")).click();
+		String validUserName = pro.getProperty("userName");
+		String validPassword = pro.getProperty("password");
+		loginpagetest = new LoginPageTest();
+		loginpagetest.validLogin(validUserName, validPassword);
+		Reporter.log("Product page opened successfully", true);
 	}
 
 	@Test(priority = 1)
 	public void getProductPageHeading() {
-
-		String headingName = driver.findElement(By.xpath("//div[@id='header_container']//span[@class='title']"))
-				.getText();
-
+		loginPage = new LoginPage();
+		String headingName = loginPage.getProductPageHeading();
 		Assert.assertEquals(headingName, "PRODUCTS");
-		Reporter.log("Now in product page", true);
+		Reporter.log("Product Page heading verified", true);
 
 	}
 
@@ -122,7 +125,7 @@ public class ProductPageTest extends TestBase {
 		}
 		String text = driver.findElement(By.xpath("//a[@class='shopping_cart_link']")).getText();
 		Assert.assertEquals(text, "");
-		Reporter.log("Cart is empty", true);
+		Reporter.log("All added items are removed and now Cart is empty", true);
 
 	}
 

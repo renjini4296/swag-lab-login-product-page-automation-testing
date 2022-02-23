@@ -20,7 +20,6 @@ public class LoginPageTest extends TestBase {
 
 	@BeforeMethod
 	public void openBrowser() {
-
 		initialization();
 	}
 
@@ -29,18 +28,18 @@ public class LoginPageTest extends TestBase {
 		loginPage = new LoginPage();
 		String title = loginPage.getTitle();
 		Assert.assertEquals(title, "Swag Labs");
-		Reporter.log("Verify tile succeed", true);
+		Reporter.log("Successfully verified the Title", true);
 
 	}
 
-	@Test(dataProvider = "validdata", dataProviderClass = DataProviderClass.class, priority = 2)
+	@Test(dataProvider = "validData", dataProviderClass = DataProviderClass.class, priority = 2)
 	public void validLogin(String username, String password) {
 		loginPage = new LoginPage();
 		loginPage.enterData(username, password);
 		loginPage.clickLoginButton();
 		String heading = loginPage.getProductPageHeading();
 		Assert.assertEquals(heading, "PRODUCTS");
-		Reporter.log("Logged in successfully");
+		Reporter.log("Successfully logged in");
 
 	}
 
@@ -50,20 +49,21 @@ public class LoginPageTest extends TestBase {
 		loginPage.clickLoginButton();
 		String errorMessage = loginPage.getFieldEmptyErrormessage();
 		Assert.assertEquals(errorMessage, "Epic sadface: Username is required");
+		Reporter.log("Invalid login");
 	}
 
-	@Test(dataProvider = "invaliddata", dataProviderClass = DataProviderClass.class, priority = 4)
+	@Test(dataProvider = "invalidData", dataProviderClass = DataProviderClass.class, priority = 4)
 	public void invalidLogin(String username, String password) {
 		loginPage = new LoginPage();
 		loginPage.enterData(username, password);
 		loginPage.clickLoginButton();
 		String message = loginPage.getInvalidLoginErrormessage();
 		Assert.assertEquals(message, "Epic sadface: Username and password do not match any user in this service");
+		Reporter.log("Invalid login");
 	}
 
 	@AfterMethod
 	public void close() {
-
 		driver.close();
 	}
 

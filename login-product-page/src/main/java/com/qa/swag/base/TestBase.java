@@ -12,40 +12,32 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class TestBase {
 
-	FileInputStream fis;
-	Properties pro;
+	public static FileInputStream fis;
+	public static Properties pro;
 	public static WebDriver driver;
 
 	public TestBase() {
-
 		try {
 			pro = new Properties();
-
 			fis = new FileInputStream(
 					"C:\\Users\\renji\\eclipse-workspace\\interview\\src\\main\\java\\com\\qa\\swag\\base\\config.properties");
 			pro.load(fis);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	public void initialization() {
-
 		String browserName = pro.getProperty("browser");
 		String urlName = pro.getProperty("url");
+		String chromeDriver = pro.getProperty("chromeDriverPath");
 		if (browserName.equalsIgnoreCase("Chrome")) {
-
-			System.setProperty("webdriver.chrome.driver", "C:\\Users\\chromedriver.exe");
-			
+			System.setProperty("webdriver.chrome.driver", chromeDriver);
 			driver = new ChromeDriver();
-
-		} else if (browserName.equals("FireFox")) {
-
-			System.setProperty("webdriver.gecko.driver", "C:\\Firefoxdriver.exe");
+		} else if (browserName.equalsIgnoreCase("FireFox")) {
+			System.setProperty("webdriver.gecko.driver", pro.getProperty("fireFoxDriverPath"));
 			driver = new FirefoxDriver();
 		}
 		driver.get(urlName);

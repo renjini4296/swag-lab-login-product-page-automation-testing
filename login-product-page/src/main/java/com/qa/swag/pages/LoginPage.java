@@ -15,22 +15,18 @@ public class LoginPage extends TestBase {
 	@FindBy(name = "login-button")
 	WebElement submit;
 	@FindBy(xpath = "//div[@id='login_button_container']//h3[contains(text(),'Epic sadface: Username is required')]")
-	WebElement emptyerror;
-
+	WebElement emptyError;
 	@FindBy(xpath = "//div[@id='login_button_container']//h3[contains(text(),'Epic')]")
-	WebElement invaliderror;
+	WebElement invalidError;
 	@FindBy(xpath = "//div[@id='header_container']//span[@class='title']")
 	WebElement heading;
 
 	public LoginPage() {
-
 		PageFactory.initElements(driver, this);
 	}
 
 	public String getTitle() {
-
 		String title = driver.getTitle();
-		System.out.print(title);
 		return title;
 	}
 
@@ -40,26 +36,21 @@ public class LoginPage extends TestBase {
 	}
 
 	public void clickLoginButton() {
-
 		submit.click();
 	}
 
 	public String getProductPageHeading() {
-
 		String headingName = heading.getText();
 		return headingName;
-
 	}
 
 	public String getFieldEmptyErrormessage() {
-
-		String message = emptyerror.getText();
+		String message = emptyError.getText();
 		return message;
 	}
 
 	public String getInvalidLoginErrormessage() {
-
-		String message = invaliderror.getText();
+		String message = invalidError.getText();
 		return message;
 	}
 }
